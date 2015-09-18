@@ -5,8 +5,10 @@ import dev.wizrad.helloandroid.services.LeagueService
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import dev.wizrad.helloandroid.services.SummonerService
 
 public class MainActivity : Activity() {
 
@@ -18,9 +20,9 @@ public class MainActivity : Activity() {
     override fun onStart() {
         super.onStart()
 
-        val service = RiotServices.create(LeagueService::class.java)
-        service.fetchChallengerLeague("na").subscribe { result ->
-           print(result)
+        val leagueService = RiotServices.create(LeagueService::class.java)
+        leagueService.fetchChallengerLeague("na").subscribe { result ->
+            // pass
         }
     }
 
