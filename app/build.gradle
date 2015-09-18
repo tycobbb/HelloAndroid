@@ -18,7 +18,7 @@ android {
 
         debug {
             def props = new Properties()
-            props.load(new FileInputStream(file("../release.properties")))
+            props.load(new FileInputStream(file("../debug.properties")))
             buildConfigField "String", "RIOT_API_KEY", props.getProperty("riot_api_key")
         }
 
