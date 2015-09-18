@@ -1,5 +1,8 @@
 package dev.wizrad.helloandroid
 
+import dev.wizrad.helloandroid.services.RiotServices
+import dev.wizrad.helloandroid.services.LeagueService
+
 import android.app.Activity
 import android.os.Bundle
 import android.view.Menu
@@ -10,6 +13,15 @@ public class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        val service = RiotServices.create(LeagueService::class.java)
+        service.fetchChallengerLeague("na").subscribe { result ->
+           print(result)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

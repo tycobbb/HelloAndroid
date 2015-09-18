@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
+
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
 
@@ -14,9 +15,20 @@ android {
     }
 
     buildTypes {
+
+        debug {
+            def props = new Properties()
+            props.load(new FileInputStream(file("../release.properties")))
+            buildConfigField "String", "RIOT_API_KEY", props.getProperty("riot_api_key")
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            def Properties props = new Properties()
+            props.load(new FileInputStream(file("../release.properties")))
+            buildConfigField "String", "RIOT_API_KEY", props.getProperty("riot_api_key")
         }
     }
 
@@ -31,6 +43,9 @@ dependencies {
     compile 'io.reactivex:rxjava:1.0.14'
     compile 'io.reactivex:rxandroid:1.0.1'
     compile 'com.squareup.retrofit:retrofit:2.0.0-beta1'
+    compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta1'
+    compile 'com.squareup.retrofit:converter-gson:2.0.0-beta1'
+    compile 'com.google.code.gson:gson:2.3.1'
 }
 
 buildscript {
@@ -46,3 +61,4 @@ buildscript {
 repositories {
     mavenCentral()
 }
+
