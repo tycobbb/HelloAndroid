@@ -1,4 +1,4 @@
-package dev.wizrad.helloandroid.services
+package dev.wizrad.helloandroid.services.utilities
 
 import android.util.Log
 import com.squareup.okhttp.Interceptor

@@ -2,6 +2,8 @@ package dev.wizrad.helloandroid.services
 
 import com.squareup.okhttp.OkHttpClient
 import dev.wizrad.helloandroid.BuildConfig
+import dev.wizrad.helloandroid.services.utilities.LoggingInterceptor
+import dev.wizrad.helloandroid.services.utilities.RiotServicesInterceptor
 
 import retrofit.GsonConverterFactory
 import retrofit.Retrofit

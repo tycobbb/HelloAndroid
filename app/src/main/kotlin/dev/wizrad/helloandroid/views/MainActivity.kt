@@ -1,14 +1,15 @@
-package dev.wizrad.helloandroid
+package dev.wizrad.helloandroid.views
 
+import dev.wizrad.helloandroid.R
 import dev.wizrad.helloandroid.services.RiotServices
-import dev.wizrad.helloandroid.services.LeagueService
+import dev.wizrad.helloandroid.services.SummonerService
+import dev.wizrad.helloandroid.services.utilities.UrlComponents
 
 import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import dev.wizrad.helloandroid.services.SummonerService
 
 public class MainActivity : Activity() {
 
@@ -20,9 +21,11 @@ public class MainActivity : Activity() {
     override fun onStart() {
         super.onStart()
 
-        val leagueService = RiotServices.create(LeagueService::class.java)
-        leagueService.fetchChallengerLeague("na").subscribe { result ->
-            // pass
+        val leagueService = RiotServices.create(SummonerService::class.java)
+        leagueService
+            .fetchSummonersByName("na", UrlComponents("derkis", "fartbutt"))
+            .subscribe { summoners ->
+                Log.d("test", "summoners: $summoners");
         }
     }
 
