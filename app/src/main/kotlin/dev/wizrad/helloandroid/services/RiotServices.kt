@@ -52,7 +52,7 @@ public class RiotServices {
             val interceptors = client.networkInterceptors()
 
             interceptors.add(RiotServicesInterceptor(API_KEY))
-            interceptors.add(LoggingInterceptor())
+            interceptors.add(LoggingInterceptor(BASE_URL))
 
             return client
         }

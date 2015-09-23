@@ -24,9 +24,10 @@ public class MainActivity : Activity() {
         val leagueService = RiotServices.create(SummonerService::class.java)
         leagueService
             .fetchSummonersByName("na", UrlComponents("derkis", "fartbutt"))
-            .subscribe { summoners ->
-                Log.d("test", "summoners: $summoners");
-        }
+            .subscribe(
+                { summoners -> Log.d("test", "$summoners") },
+                { error     -> Log.e("test", "$error") }
+            )
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

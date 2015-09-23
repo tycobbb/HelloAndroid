@@ -1,6 +1,10 @@
 package dev.wizrad.helloandroid.models
 
 class Summoner(
-    val name: String) {
+    val id:   Long,
+    val name: String,
+    val summonerLevel: Long,
+    val profileIconId: Int,
+    val revisionDate:  Long) {
 
 }
