@@ -14,6 +14,13 @@ buildscript {
     }
 }
 
+def loadConfig(buildConfigField, filename) {
+    def props = new Properties()
+    props.load(new FileInputStream(file(filename)))
+
+    buildConfigField "String", "RIOT_API_KEY", props.getProperty("riot_api_key")
+}
+
 android {
 
     compileSdkVersion 23
@@ -29,19 +36,12 @@ android {
 
     buildTypes {
 
-        debug {
-            def props = new Properties()
-            props.load(new FileInputStream(file("../debug.properties")))
-            buildConfigField "String", "RIOT_API_KEY", props.getProperty("riot_api_key")
-        }
+        loadConfig(debug.&buildConfigField,   "../debug.properties")
+        loadConfig(release.&buildConfigField, "../release.properties")
 
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
-            def Properties props = new Properties()
-            props.load(new FileInputStream(file("../release.properties")))
-            buildConfigField "String", "RIOT_API_KEY", props.getProperty("riot_api_key")
         }
     }
 
