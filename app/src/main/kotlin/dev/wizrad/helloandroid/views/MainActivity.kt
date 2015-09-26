@@ -33,7 +33,7 @@ public class MainActivity : Activity() {
         setContentView(R.layout.activity_main)
 
         // inject dependencies
-        (application as MainApplication).component.inject(this)
+        (this.application as MainApplication).graph.inject(this)
     }
 
     override fun onStart() {
