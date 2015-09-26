@@ -1,16 +1,19 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.neenbedankt.android-apt'
 
 buildscript {
     ext.kotlin_version = '0.13.1513'
 
     repositories {
         mavenCentral()
+        maven {
+            url 'http://oss.sonatype.org/content/repositories/snapshots'
+        }
     }
 
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+//        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:0.1-SNAPSHOT"
     }
 }
 
@@ -62,7 +65,7 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.0.1'
 
     // dagger2
-    apt 'com.google.dagger:dagger-compiler:2.1-SNAPSHOT'
+    kapt 'com.google.dagger:dagger-compiler:2.1-SNAPSHOT'
     compile 'com.google.dagger:dagger:2.1-SNAPSHOT'
     provided 'org.glassfish:javax.annotation:10.0-b28'
 
