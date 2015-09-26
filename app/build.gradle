@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.neenbedankt.android-apt'
 
 buildscript {
     ext.kotlin_version = '0.13.1513'
@@ -10,7 +11,6 @@ buildscript {
 
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
     }
 }
 
@@ -28,10 +28,10 @@ android {
 
     defaultConfig {
         applicationId "dev.wizrad.helloandroid"
-        minSdkVersion 22
-        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        minSdkVersion 22
+        targetSdkVersion 23
     }
 
     buildTypes {
@@ -54,21 +54,31 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
+    // kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    // rx
     compile 'io.reactivex:rxjava:1.0.14'
     compile 'io.reactivex:rxandroid:1.0.1'
+
+    // dagger2
+    apt 'com.google.dagger:dagger-compiler:2.1-SNAPSHOT'
+    compile 'com.google.dagger:dagger:2.1-SNAPSHOT'
+    provided 'org.glassfish:javax.annotation:10.0-b28'
+
+    // retrofit
     compile 'com.squareup.retrofit:retrofit:2.0.0-beta1'
     compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta1'
     compile 'com.squareup.retrofit:converter-gson:2.0.0-beta1'
     compile 'com.google.code.gson:gson:2.3.1'
 
+    // spek
     testCompile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testCompile "org.jetbrains.spek:spek:0.1-SNAPSHOT"
 }
 
 repositories {
     mavenCentral()
-    maven {
-        url "http://repository.jetbrains.com/all"
-    }
+    maven { url "http://repository.jetbrains.com/all" }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }

@@ -1,7 +1,7 @@
 package dev.wizrad.helloandroid.views
 
 import dev.wizrad.helloandroid.R
-import dev.wizrad.helloandroid.services.RiotServices
+import dev.wizrad.helloandroid.services.modules.RiotServices
 import dev.wizrad.helloandroid.services.SummonerService
 import dev.wizrad.helloandroid.services.utilities.UrlComponents
 
@@ -10,19 +10,36 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import dev.wizrad.helloandroid.MainApplication
+
+import javax.inject.Inject
 
 public class MainActivity : Activity() {
+
+    //
+    // region Dependencies
+    //
+
+    @Inject lateinit var leagueService: SummonerService
+
+    // endregion
+
+    //
+    // region Lifecycle
+    //
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // inject dependencies
+        (application as MainApplication).component.inject(this)
     }
 
     override fun onStart() {
         super.onStart()
 
-        val leagueService = RiotServices.create(SummonerService::class.java)
-        leagueService
+        this.leagueService
             .fetchSummonersByName("na", UrlComponents("derkis", "fartbutt"))
             .subscribe(
                 { summoners -> Log.d("test", "$summoners") },
@@ -49,4 +66,6 @@ public class MainActivity : Activity() {
 
         return super.onOptionsItemSelected(item)
     }
+
+    // endregion
 }
