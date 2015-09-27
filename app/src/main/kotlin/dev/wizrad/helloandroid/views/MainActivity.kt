@@ -1,20 +1,17 @@
 package dev.wizrad.helloandroid.views
 
 import dev.wizrad.helloandroid.R
-import dev.wizrad.helloandroid.services.modules.RiotServices
 import dev.wizrad.helloandroid.services.SummonerService
 import dev.wizrad.helloandroid.services.utilities.UrlComponents
 
-import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import dev.wizrad.helloandroid.MainApplication
 
 import javax.inject.Inject
 
-public class MainActivity : Activity() {
+public class MainActivity : BaseActivity() {
 
     //
     // region Dependencies
@@ -33,7 +30,7 @@ public class MainActivity : Activity() {
         setContentView(R.layout.activity_main)
 
         // inject dependencies
-        (this.application as MainApplication).graph.inject(this)
+        this.graph.inject(this);
     }
 
     override fun onStart() {

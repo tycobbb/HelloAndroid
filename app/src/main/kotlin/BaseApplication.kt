@@ -1,6 +1,9 @@
 package dev.wizrad.helloandroid
 
+import dev.wizrad.helloandroid.core.Graph
+import dev.wizrad.helloandroid.core.DaggerGraph
 import dev.wizrad.helloandroid.services.modules.RiotServicesModule
+
 import android.app.Application
 
 public abstract class BaseApplication : Application() {

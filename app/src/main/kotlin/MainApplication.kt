@@ -1,5 +1,7 @@
 package dev.wizrad.helloandroid
 
+import dev.wizrad.helloandroid.core.Graph
+
 public class MainApplication : BaseApplication() {
 
     public lateinit var graph: Graph private set
@@ -7,9 +9,8 @@ public class MainApplication : BaseApplication() {
     override fun onCreate() {
         super.onCreate()
 
-        val graph = this.initGraph()
-        graph.inject(this)
-        this.graph = graph
+        this.graph = this.initGraph()
+        this.graph.inject(this)
     }
 
 }

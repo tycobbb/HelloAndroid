@@ -1,5 +1,6 @@
-package dev.wizrad.helloandroid
+package dev.wizrad.helloandroid.core
 
+import dev.wizrad.helloandroid.MainApplication
 import dev.wizrad.helloandroid.views.MainActivity
 import dev.wizrad.helloandroid.services.modules.RiotServicesModule
 
@@ -10,7 +11,7 @@ import javax.inject.Singleton
 @Component(modules = arrayOf(RiotServicesModule::class))
 public interface Graph {
 
-    public fun inject(application:  MainApplication)
+    public fun inject(application: MainApplication)
     public fun inject(mainActivity: MainActivity)
 
 }
