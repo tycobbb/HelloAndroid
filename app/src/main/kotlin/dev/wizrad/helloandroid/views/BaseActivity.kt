@@ -5,16 +5,23 @@ import dev.wizrad.helloandroid.presenters.PresenterType
 import dev.wizrad.helloandroid.dagger.components.DaggerActivityComponent
 
 import android.app.Activity
+import javax.inject.Inject
 
 public abstract class BaseActivity<P: PresenterType> : Activity() {
 
-    abstract var presenter: P
+    //
+    // region Dependencies
+    //
+
+    protected lateinit var presenter: P @Inject set
+
+    // endregion
 
     //
     // region Lifecycle
     //
 
-    override fun onStart() {
+    protected override fun onStart() {
         super.onStart()
         this.presenter.initialize()
     }
@@ -25,7 +32,7 @@ public abstract class BaseActivity<P: PresenterType> : Activity() {
     // region Injection
     //
 
-    val component: DaggerActivityComponent.Builder get() {
+    protected val component: DaggerActivityComponent.Builder get() {
         return DaggerActivityComponent.builder()
             .rootComponent((this.application as MainApplication).component);
     }

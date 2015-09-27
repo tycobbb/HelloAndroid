@@ -11,17 +11,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 
-import javax.inject.Inject
-
 public class MainActivity : BaseActivity<MainPresenterType>(), MainView {
-
-    //
-    // region Dependencies
-    //
-
-    @Inject lateinit override var presenter: MainPresenterType
-
-    // endregion
 
     //
     // region Lifecycle
