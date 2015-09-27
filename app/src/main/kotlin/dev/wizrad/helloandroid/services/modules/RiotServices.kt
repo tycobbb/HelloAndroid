@@ -1,4 +1,4 @@
-package dev.wizrad.helloandroid.services
+package dev.wizrad.helloandroid.services.modules
 
 import com.squareup.okhttp.OkHttpClient
 import dev.wizrad.helloandroid.BuildConfig
