@@ -1,24 +1,25 @@
 package dev.wizrad.helloandroid.views
 
 import dev.wizrad.helloandroid.R
+import dev.wizrad.helloandroid.models.Summoner
 import dev.wizrad.helloandroid.presenters.MainPresenterType
+import dev.wizrad.helloandroid.dagger.modules.MainModule
+
 
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import dev.wizrad.helloandroid.dagger.modules.MainModule
-import dev.wizrad.helloandroid.models.Summoner
 
 import javax.inject.Inject
 
-public class MainActivity : BaseActivity(), MainView {
+public class MainActivity : BaseActivity<MainPresenterType>(), MainView {
 
     //
     // region Dependencies
     //
 
-    @Inject lateinit var presenter: MainPresenterType
+    @Inject lateinit override var presenter: MainPresenterType
 
     // endregion
 
@@ -34,12 +35,6 @@ public class MainActivity : BaseActivity(), MainView {
         this.component
             .mainModule(MainModule(this))
             .build().inject(this)
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        this.presenter.initialize()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
