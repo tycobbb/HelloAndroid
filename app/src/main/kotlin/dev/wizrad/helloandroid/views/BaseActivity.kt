@@ -1,21 +1,15 @@
 package dev.wizrad.helloandroid.views
 
 import dev.wizrad.helloandroid.MainApplication
-import dev.wizrad.helloandroid.core.Graph
-import dev.wizrad.helloandroid.core.Graphable
+import dev.wizrad.helloandroid.dagger.components.DaggerActivityComponent
 
 import android.app.Activity
 
-public abstract class BaseActivity : Activity(), Graphable {
+public abstract class BaseActivity : Activity() {
 
-    //
-    // region Graphable
-    //
-
-    override val graph: Graph get() {
-        return (this.application as MainApplication).graph
+    val component: DaggerActivityComponent.Builder get() {
+        return DaggerActivityComponent.builder()
+            .rootComponent((this.application as MainApplication).component);
     }
-
-    // endregion
 
 }

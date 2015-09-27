@@ -1,23 +1,24 @@
 package dev.wizrad.helloandroid.views
 
 import dev.wizrad.helloandroid.R
-import dev.wizrad.helloandroid.services.SummonerService
-import dev.wizrad.helloandroid.services.utilities.UrlComponents
+import dev.wizrad.helloandroid.presenters.MainPresenterType
 
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import dev.wizrad.helloandroid.dagger.modules.MainModule
+import dev.wizrad.helloandroid.models.Summoner
 
 import javax.inject.Inject
 
-public class MainActivity : BaseActivity() {
+public class MainActivity : BaseActivity(), MainView {
 
     //
     // region Dependencies
     //
 
-    @Inject lateinit var leagueService: SummonerService
+    @Inject lateinit var presenter: MainPresenterType
 
     // endregion
 
@@ -30,18 +31,15 @@ public class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
 
         // inject dependencies
-        this.graph.inject(this);
+        this.component
+            .mainModule(MainModule(this))
+            .build().inject(this)
     }
 
     override fun onStart() {
         super.onStart()
 
-        this.leagueService
-            .fetchSummonersByName("na", UrlComponents("derkis", "fartbutt"))
-            .subscribe(
-                { summoners -> Log.d("test", "$summoners") },
-                { error     -> Log.e("test", "$error") }
-            )
+        this.presenter.initialize()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -62,6 +60,16 @@ public class MainActivity : BaseActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    // endregion
+
+    //
+    // region MainView
+    //
+
+    override fun didUpdateSummoner(summoner: Summoner) {
+        Log.d("test", "view received: $summoner")
     }
 
     // endregion

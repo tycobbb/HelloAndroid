@@ -1,16 +1,16 @@
 package dev.wizrad.helloandroid
 
-import dev.wizrad.helloandroid.core.Graph
-import dev.wizrad.helloandroid.core.DaggerGraph
-import dev.wizrad.helloandroid.services.modules.RiotServicesModule
+import dev.wizrad.helloandroid.dagger.components.RootComponent
+import dev.wizrad.helloandroid.dagger.components.DaggerRootComponent
+import dev.wizrad.helloandroid.dagger.modules.RiotServicesModule
 
 import android.app.Application
 
 public abstract class BaseApplication : Application() {
 
-    protected fun initGraph() : Graph {
-        return DaggerGraph.builder()
-            .riotServicesModule(RiotServicesModule(this))
+    protected fun initComponent() : RootComponent {
+        return DaggerRootComponent.builder()
+            .riotServicesModule(RiotServicesModule())
             .build()
     }
 
