@@ -4,5 +4,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="action_foo">Foo</string>
+    <string name="summoner_name_hint">Summoner Name</string>
 
 </resources>
