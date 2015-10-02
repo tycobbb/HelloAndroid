@@ -4,9 +4,9 @@
     <style name="Theme" parent="Theme.Base"/>
 
     <style name="Theme.Base" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">#FF00FF00</item>
-        <item name="colorPrimaryDark">#FFFF0000</item>
-        <item name="colorAccent">#FF0000FF</item>
+        <item name="colorPrimary">@color/purplePrimary</item>
+        <item name="colorPrimaryDark">@color/purpleDark</item>
+        <item name="colorAccent">@color/pinkAccent</item>
     </style>
 
 </resources>

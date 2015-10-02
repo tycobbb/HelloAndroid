@@ -9,16 +9,38 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".dev.wizrad.helloandroid.views.MainActivity">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/summoner_name_field"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <EditText
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/summoner_name_field"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/summoner_name_hint"/>
+            android:layout_height="wrap_content">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/summoner_name_hint"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/summoner_region_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/summoner_region_hint"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="@string/summoner_find_action"/>
+
+    </LinearLayout>
 
 </FrameLayout>

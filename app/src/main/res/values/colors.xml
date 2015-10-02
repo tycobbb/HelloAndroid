@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- purple -->
+    <color name="purplePrimary">#673AB7</color>
+    <color name="purpleDark">#4527A0</color>
+
+    <!-- pink -->
+    <color name="pinkAccent">#D81B60</color>
+</resources>
