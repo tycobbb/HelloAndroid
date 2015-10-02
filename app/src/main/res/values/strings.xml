@@ -6,4 +6,15 @@
     <string name="summoner_name_hint">Summoner Name</string>
     <string name="summoner_region_hint">Region</string>
     <string name="summoner_find_action">Find Me</string>
+
+    <string name="region_br">Brazil</string>
+    <string name="region_eune">EU Nordic East</string>
+    <string name="region_euw">EU West</string>
+    <string name="region_kr">Korea</string>
+    <string name="region_lan">Latin America North</string>
+    <string name="region_las">Latin America South</string>
+    <string name="region_na">North America</string>
+    <string name="region_oce">Oceania</string>
+    <string name="region_ru">Russia</string>
+    <string name="region_tr">Turkey</string>
 </resources>

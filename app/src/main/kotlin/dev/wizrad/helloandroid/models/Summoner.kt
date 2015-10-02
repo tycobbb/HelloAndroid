@@ -1,6 +1,6 @@
 package dev.wizrad.helloandroid.models
 
-class Summoner(
+data class Summoner(
     val id:   Long,
     val name: String,
     val summonerLevel: Long,

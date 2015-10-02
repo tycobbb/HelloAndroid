@@ -1,6 +1,6 @@
 package dev.wizrad.helloandroid.models
 
-class League (
+data class League (
     val queue: String) {
 
 }
