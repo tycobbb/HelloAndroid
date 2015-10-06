@@ -15,5 +15,11 @@ enum class Region(
     NA("na", R.string.region_na),
     OCEANIA("oce", R.string.region_oce),
     RUSSIA("ru", R.string.region_ru),
-    TURKEY("tr", R.string.region_tr)
+    TURKEY("tr", R.string.region_tr);
+
+    companion object {
+        fun all() : Array<Region> {
+            return arrayOf(BRAZIL, EU_EAST, EU_WEST, KOREA, LA_NORTH, LA_SOUTH, NA, OCEANIA, RUSSIA, TURKEY)
+        }
+    }
 }

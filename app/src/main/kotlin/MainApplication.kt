@@ -9,8 +9,8 @@ public class MainApplication : BaseApplication() {
     override fun onCreate() {
         super.onCreate()
 
-        this.component = this.initComponent()
-        this.component.inject(this)
+        component = this.initComponent()
+        component.inject(this)
     }
 
 }

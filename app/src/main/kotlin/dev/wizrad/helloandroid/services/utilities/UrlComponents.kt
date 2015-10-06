@@ -5,7 +5,7 @@ public class UrlComponents<T>(vararg val components: T) {
     public var separator = ","
 
     override fun toString(): String {
-        return this.components.joinToString(this.separator)
+        return components.joinToString(separator)
     }
 
 }

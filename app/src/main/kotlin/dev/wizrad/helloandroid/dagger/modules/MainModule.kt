@@ -13,7 +13,7 @@ public class MainModule(
 
     @Provides
     fun mainView() : MainView {
-        return this.view
+        return view
     }
 
     @Provides
