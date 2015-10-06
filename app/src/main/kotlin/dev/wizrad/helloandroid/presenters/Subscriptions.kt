@@ -6,7 +6,7 @@ class Subscriptions(
     var subscriptions: MutableList<Subscription>) {
 
     fun add(subscription: Subscription) : Subscriptions {
-        this.subscriptions.add(subscription)
+        subscriptions.add(subscription)
         return this
     }
 }

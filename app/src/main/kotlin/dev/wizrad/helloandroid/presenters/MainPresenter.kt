@@ -20,9 +20,9 @@ internal class MainPresenter @Inject constructor(
     // region Properties
     //
 
-    val _regions = Region.all()
-    val _name = BehaviorSubject.create<String>()
-    val _selectedRegion = BehaviorSubject.create<Region>()
+    private val _regions = Region.all()
+    private val _name = BehaviorSubject.create<String>()
+    private val _selectedRegion = BehaviorSubject.create<Region>()
 
     //
     // Input Bindings
