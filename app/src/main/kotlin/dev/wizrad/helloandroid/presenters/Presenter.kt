@@ -1,5 +1,6 @@
 package dev.wizrad.helloandroid.presenters
 
+import dev.wizrad.helloandroid.utilities.Subscriptions
 import rx.Subscription
 import java.util.ArrayList
 

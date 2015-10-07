@@ -6,7 +6,7 @@ import dev.wizrad.helloandroid.dagger.components.DaggerActivityComponent
 
 import android.app.Activity
 import android.os.Bundle
-import dev.wizrad.helloandroid.presenters.Subscriptions
+import dev.wizrad.helloandroid.utilities.Subscriptions
 import rx.Subscription
 import java.util.*
 import javax.inject.Inject

@@ -12,13 +12,13 @@ fun AbsSpinner.observe(
     context:  Context,
     resource: Int = android.R.layout.simple_spinner_item) : Subscription {
 
-    val localAdapter = ArrayAdapter<String>(context, resource)
+    val adapter = ArrayAdapter<String>(context, resource)
     val subscription = source.subscribe { strings ->
-        localAdapter.clear()
-        localAdapter.addAll(strings)
+        adapter.clear()
+        adapter.addAll(strings)
     }
 
-    adapter = localAdapter
+    this.adapter = adapter
 
     return subscription
 }

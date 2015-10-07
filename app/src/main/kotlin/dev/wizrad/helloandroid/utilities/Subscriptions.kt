@@ -1,4 +1,4 @@
-package dev.wizrad.helloandroid.presenters
+package dev.wizrad.helloandroid.utilities
 
 import rx.Subscription
 
