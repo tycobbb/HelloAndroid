@@ -3,6 +3,7 @@ package dev.wizrad.helloandroid.views.shared
 import dev.wizrad.helloandroid.R
 
 import android.content.Context
+import android.text.style.TextAppearanceSpan
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -27,6 +28,7 @@ internal class LabeledInputLayout : LinearLayout {
         // insert the title label
         titleLabel = TextView(context)
         titleLabel.text = title
+        titleLabel.setTextAppearance(context, android.R.style.TextAppearance_Widget_DropDownHint)
         this.addView(titleLabel)
     }
 

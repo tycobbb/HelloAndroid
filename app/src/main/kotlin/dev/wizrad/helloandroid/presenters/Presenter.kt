@@ -36,7 +36,7 @@ internal abstract class Presenter : PresenterType {
         this.didBecomeActive()
     }
 
-    protected fun didBecomeActive() {
+    protected open fun didBecomeActive() {
 
     }
 
@@ -51,7 +51,7 @@ internal abstract class Presenter : PresenterType {
         this.didResignActive()
     }
 
-    protected fun didResignActive() {
+    protected open fun didResignActive() {
 
     }
 

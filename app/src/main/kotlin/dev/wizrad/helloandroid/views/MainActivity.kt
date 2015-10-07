@@ -4,8 +4,7 @@ import dev.wizrad.helloandroid.R
 import dev.wizrad.helloandroid.models.Summoner
 import dev.wizrad.helloandroid.presenters.MainPresenterType
 import dev.wizrad.helloandroid.dagger.modules.MainModule
-import dev.wizrad.helloandroid.extensions.observe
-import dev.wizrad.helloandroid.extensions.observeEnabled
+import dev.wizrad.helloandroid.extensions.setItems
 
 import android.os.Bundle
 import android.util.Log
@@ -46,11 +45,6 @@ public class MainActivity : BaseActivity<MainPresenterType>(), MainView {
     override fun onStart() {
         super.onStart()
 
-        // bind presenter observables to ui
-        subscriptions
-            .add(regionSpinner.observe(presenter.regions, this))
-            .add(findButton.observeEnabled(presenter.canSubmit))
-
         // bind input sources to presenter
         presenter.bindName(RxTextView.textChanges(nameField))
         presenter.bindRegion(RxAdapterView.itemSelections(regionSpinner))
@@ -60,6 +54,14 @@ public class MainActivity : BaseActivity<MainPresenterType>(), MainView {
     //
     // MainView
     //
+
+    override fun didEnableSubmit(isEnabled: Boolean) {
+        this.findButton.isEnabled = isEnabled
+    }
+
+    override fun didUpdateRegions(regions: List<String>) {
+        this.regionSpinner.setItems(regions, this)
+    }
 
     override fun didUpdateSummoner(summoner: Summoner) {
         Log.d("test", "view received: $summoner")
