@@ -7,6 +7,7 @@ import dev.wizrad.helloandroid.services.utilities.UrlComponents
 
 import android.util.Log
 import rx.Observable
+import rx.Subscription
 import rx.subjects.BehaviorSubject
 
 import javax.inject.Inject
@@ -29,6 +30,12 @@ internal class MainPresenter @Inject constructor(
         // automatically update the regions
         view.didUpdateRegions(regions.map { it.code })
 
+        // bind to the view's input sources
+        subscriptions
+            .add(this.bindName(view.summonerName()))
+            .add(this.bindRegion(view.selectedRegion()))
+            .add(this.bindAction(view.action()))
+
         // update canSubmit as it changes
         subscriptions.add(canSubmit.subscribe { canSubmit ->
             view.didEnableSubmit(canSubmit)
@@ -39,23 +46,21 @@ internal class MainPresenter @Inject constructor(
     // Input Bindings
     //
 
-    override fun bindName(source: Observable<CharSequence>) {
-        subscriptions.add(source
+    fun bindName(source: Observable<CharSequence>) : Subscription {
+        return source
             .map { it.toString() }
-            .subscribe(this.name))
+            .subscribe(this.name)
     }
 
-    override fun bindRegion(source: Observable<Int>) {
-        subscriptions.add(source
+    fun bindRegion(source: Observable<Int>) : Subscription {
+        return source
             .map { regions[it] }
-            .subscribe(selectedRegion))
+            .subscribe(selectedRegion)
     }
 
-    override fun bindAction(source: Observable<Any>) {
-        this.subscriptions.add(source
-            .subscribe {
-                this.fetchSummoner()
-            })
+    fun bindAction(source: Observable<Any>) : Subscription {
+        return source
+            .subscribe { this.fetchSummoner() }
     }
 
     //

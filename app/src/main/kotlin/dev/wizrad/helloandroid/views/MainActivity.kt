@@ -16,6 +16,7 @@ import butterknife.bindView
 import com.jakewharton.rxbinding.view.RxView
 import com.jakewharton.rxbinding.widget.RxAdapterView
 import com.jakewharton.rxbinding.widget.RxTextView
+import rx.Observable
 
 public class MainActivity : BaseActivity<MainPresenterType>(), MainView {
 
@@ -42,25 +43,28 @@ public class MainActivity : BaseActivity<MainPresenterType>(), MainView {
         setContentView(R.layout.activity_main)
     }
 
-    override fun onStart() {
-        super.onStart()
-
-        // bind input sources to presenter
-        presenter.bindName(RxTextView.textChanges(nameField))
-        presenter.bindRegion(RxAdapterView.itemSelections(regionSpinner))
-        presenter.bindAction(RxView.clicks(findButton))
-    }
-
     //
     // MainView
     //
 
+    override fun summonerName(): Observable<CharSequence> {
+        return RxTextView.textChanges(nameField)
+    }
+
+    override fun selectedRegion(): Observable<Int> {
+        return RxAdapterView.itemSelections(regionSpinner)
+    }
+
+    override fun action(): Observable<Any> {
+        return RxView.clicks(findButton);
+    }
+
     override fun didEnableSubmit(isEnabled: Boolean) {
-        this.findButton.isEnabled = isEnabled
+        findButton.isEnabled = isEnabled
     }
 
     override fun didUpdateRegions(regions: List<String>) {
-        this.regionSpinner.setItems(regions, this)
+        regionSpinner.setItems(regions, this)
     }
 
     override fun didUpdateSummoner(summoner: Summoner) {

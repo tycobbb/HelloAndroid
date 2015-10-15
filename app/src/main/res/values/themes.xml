@@ -4,6 +4,7 @@
     <style name="Theme" parent="Theme.Base"/>
 
     <style name="Theme.Base" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:textColor">@color/white</item>
         <item name="colorPrimary">@color/purplePrimary</item>
         <item name="colorPrimaryDark">@color/purpleDark</item>
         <item name="colorAccent">@color/pinkAccent</item>

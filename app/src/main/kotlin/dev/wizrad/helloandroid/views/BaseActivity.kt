@@ -6,9 +6,7 @@ import dev.wizrad.helloandroid.dagger.components.DaggerActivityComponent
 
 import android.app.Activity
 import android.os.Bundle
-import dev.wizrad.helloandroid.utilities.Subscriptions
-import rx.Subscription
-import java.util.*
+
 import javax.inject.Inject
 
 public abstract class BaseActivity<P: PresenterType> : Activity() {
@@ -18,16 +16,6 @@ public abstract class BaseActivity<P: PresenterType> : Activity() {
     //
 
     protected lateinit var presenter: P @Inject set
-
-    //
-    // Properties
-    //
-
-    private var _subscriptions: MutableList<Subscription>? = null
-
-    val subscriptions: Subscriptions get() {
-        return Subscriptions(_subscriptions!!)
-    }
 
     //
     // Lifecycle
@@ -46,8 +34,6 @@ public abstract class BaseActivity<P: PresenterType> : Activity() {
     protected override fun onStart() {
         super.onStart()
 
-        // provide storage for our subscriptions
-        _subscriptions = ArrayList<Subscription>()
         // and allow the present to set-up
         presenter.becomeActive()
     }
@@ -57,14 +43,6 @@ public abstract class BaseActivity<P: PresenterType> : Activity() {
 
         // allow the presenter to clean up
         presenter.resignActive()
-
-        // then clean up our subscriptions
-        val subscriptions = _subscriptions
-        _subscriptions    = null
-
-        for(subscription in subscriptions!!) {
-            subscription.unsubscribe()
-        }
     }
 
     //

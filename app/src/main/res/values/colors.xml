@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- grayscale -->
+    <color name="white">#FFFFFF</color>
+
     <!-- purple -->
     <color name="purplePrimary">#673AB7</color>
     <color name="purpleDark">#4527A0</color>

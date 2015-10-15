@@ -15,18 +15,19 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <android.support.design.widget.TextInputLayout
+        <dev.wizrad.helloandroid.views.shared.FormFieldLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:hint="@string/summoner_name_hint">
 
             <EditText
                 android:id="@+id/summoner_name_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/summoner_name_hint"/>
-        </android.support.design.widget.TextInputLayout>
+        </dev.wizrad.helloandroid.views.shared.FormFieldLayout>
 
-        <dev.wizrad.helloandroid.views.shared.LabeledInputLayout
+        <dev.wizrad.helloandroid.views.shared.FormFieldLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:hint="@string/summoner_region_hint">
@@ -35,7 +36,17 @@
                 android:id="@+id/summoner_region_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-        </dev.wizrad.helloandroid.views.shared.LabeledInputLayout>
+        </dev.wizrad.helloandroid.views.shared.FormFieldLayout>
+
+        <dev.wizrad.helloandroid.views.shared.FormFieldLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hint="whatever">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </dev.wizrad.helloandroid.views.shared.FormFieldLayout>
 
         <Button
             android:id="@+id/summoner_find_button"
