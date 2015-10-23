@@ -4,18 +4,17 @@ import dev.wizrad.helloandroid.R
 import dev.wizrad.helloandroid.models.Summoner
 import dev.wizrad.helloandroid.presenters.MainPresenterType
 import dev.wizrad.helloandroid.dagger.modules.MainModule
-import dev.wizrad.helloandroid.extensions.setItems
 
 import android.os.Bundle
 import android.util.Log
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Spinner
 
 import butterknife.bindView
 import com.jakewharton.rxbinding.view.RxView
-import com.jakewharton.rxbinding.widget.RxAdapterView
 import com.jakewharton.rxbinding.widget.RxTextView
+import dev.wizrad.helloandroid.views.shared.OptionsField
 import rx.Observable
 
 public class MainActivity : BaseActivity<MainPresenterType>(), MainView {
@@ -24,9 +23,9 @@ public class MainActivity : BaseActivity<MainPresenterType>(), MainView {
     // Outlets
     //
 
-    private val nameField:     EditText by bindView(R.id.summoner_name_field)
-    private val regionSpinner: Spinner  by bindView(R.id.summoner_region_field)
-    private val findButton:    Button   by bindView(R.id.summoner_find_button)
+    private val nameField:    EditText     by bindView(R.id.summoner_name_field)
+    private val optionsField: OptionsField by bindView(R.id.summoner_region_field)
+    private val findButton:   Button       by bindView(R.id.summoner_find_button)
 
     //
     // Lifecycle
@@ -52,7 +51,7 @@ public class MainActivity : BaseActivity<MainPresenterType>(), MainView {
     }
 
     override fun selectedRegion(): Observable<Int> {
-        return RxAdapterView.itemSelections(regionSpinner)
+        return optionsField.selectedOption()
     }
 
     override fun action(): Observable<Any> {
@@ -63,8 +62,12 @@ public class MainActivity : BaseActivity<MainPresenterType>(), MainView {
         findButton.isEnabled = isEnabled
     }
 
+    override fun didUpdateSelectedRegion(region: String) {
+        optionsField.text = region
+    }
+
     override fun didUpdateRegions(regions: List<String>) {
-        regionSpinner.setItems(regions, this)
+        optionsField.options = regions
     }
 
     override fun didUpdateSummoner(summoner: Summoner) {

@@ -1,16 +1,16 @@
 package dev.wizrad.helloandroid.views.shared
 
-import dev.wizrad.helloandroid.R
-import dev.wizrad.helloandroid.extensions.inflate
-
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-
 import butterknife.bindView
+import dev.wizrad.helloandroid.R
+import dev.wizrad.helloandroid.extensions.inflate
+import dev.wizrad.helloandroid.extensions.unwrap
+import dev.wizrad.helloandroid.extensions.get
 
 internal class FormFieldLayout : LinearLayout {
 
@@ -20,14 +20,14 @@ internal class FormFieldLayout : LinearLayout {
     constructor(context: Context, attrs: AttributeSet, defaultStyle: Int)
         : super(context, attrs, defaultStyle) {
 
-        context.inflate(R.layout.view_form_field_layout, this)
+        inflate(R.layout.view_form_field_layout, context)
 
         // configure layout
         orientation = LinearLayout.VERTICAL
 
-        // apply optional stylable attributes
-        val attributes  = context.obtainStyledAttributes(attrs, R.styleable.FormFieldLayout)
-        titleLabel.text = attributes.getText(R.styleable.FormFieldLayout_hint)
+        // apply optional styleable attributes
+        val attributes = attrs.unwrap(R.styleable.FormFieldLayout, context)
+        titleLabel.text = attributes[R.styleable.FormFieldLayout_title]
         attributes.recycle()
     }
 
@@ -35,9 +35,9 @@ internal class FormFieldLayout : LinearLayout {
         super.addView(child, index, params)
 
         if(child != this.titleLabel) {
-           child?.setOnFocusChangeListener { view, isFocused ->
+            child?.setOnFocusChangeListener { view, isFocused ->
                this.updateFocused(isFocused);
-           }
+            }
         }
     }
 

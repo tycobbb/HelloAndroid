@@ -9,6 +9,7 @@ import android.util.Log
 import rx.Observable
 import rx.Subscription
 import rx.subjects.BehaviorSubject
+import rx.subscriptions.CompositeSubscription
 
 import javax.inject.Inject
 
@@ -21,8 +22,8 @@ internal class MainPresenter @Inject constructor(
     //
 
     private val regions = Region.all()
-    private val name = BehaviorSubject.create<String>()
-    private val selectedRegion = BehaviorSubject.create<Region>()
+    private val name = BehaviorSubject.create<String>("")
+    private val selectedRegion = BehaviorSubject.create<Region>(Region.NA)
 
     override fun didBecomeActive() {
         super.didBecomeActive()
@@ -53,9 +54,17 @@ internal class MainPresenter @Inject constructor(
     }
 
     fun bindRegion(source: Observable<Int>) : Subscription {
-        return source
+        // subscribe the the subject to the input source
+        val hydration = source
             .map { regions[it] }
             .subscribe(selectedRegion)
+
+        // update the view as the region changes
+        val update = selectedRegion.subscribe { region ->
+            view.didUpdateSelectedRegion(region.code)
+        }
+
+        return CompositeSubscription(hydration, update)
     }
 
     fun bindAction(source: Observable<Any>) : Subscription {
@@ -70,7 +79,7 @@ internal class MainPresenter @Inject constructor(
     val canSubmit: Observable<Boolean> get() {
         return Observable
             .combineLatest(selectedRegion, name) { region, name ->
-                name.length() != 0 && region != null
+                name.length != 0 && region != null
             }
     }
 

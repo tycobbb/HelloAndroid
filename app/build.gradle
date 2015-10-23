@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 buildscript {
-    ext.kotlin_version = '0.14.449'
+    ext.kotlin_version = '1.0.0-beta-1038'
     ext.dagger_version = '2.1-SNAPSHOT'
 
     repositories {
@@ -65,7 +65,7 @@ dependencies {
     // rx
     compile 'io.reactivex:rxjava:1.0.14'
     compile 'io.reactivex:rxandroid:1.0.1'
-    compile 'com.jakewharton.rxbinding:rxbinding-kotlin:0.2.0'
+    compile 'com.jakewharton.rxbinding:rxbinding:0.2.0'
 
     // dagger2
     kapt    "com.google.dagger:dagger-compiler:$dagger_version"
@@ -79,8 +79,8 @@ dependencies {
     compile 'com.google.code.gson:gson:2.3.1'
 
     // android support
-    compile 'com.android.support:appcompat-v7:23.0.1'
-    compile 'com.android.support:design:23.0.1'
+    compile 'com.android.support:appcompat-v7:23.1.0'
+    compile 'com.android.support:design:23.1.0'
 
     // butterknife
     compile 'com.jakewharton:kotterknife:0.1.0-SNAPSHOT'

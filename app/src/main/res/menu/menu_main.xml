@@ -3,16 +3,4 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".dev.wizrad.helloandroid.dev.wizrad.helloandroid.views.MainActivity">
 
-    <item
-        android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        android:orderInCategory="1"
-        android:showAsAction="never" />
-
-    <item
-        android:id="@+id/action_foo"
-        android:title="@string/action_foo"
-        android:orderInCategory="2"
-        android:showAsAction="never" />
-
 </menu>

@@ -1,9 +1,8 @@
 package dev.wizrad.helloandroid.dagger.scopes
 
 import javax.inject.Scope;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy.RUNTIME;
+import kotlin.annotation.Retention;
 
 @Scope
-@Retention(RUNTIME)
+@Retention(AnnotationRetention.RUNTIME)
 public annotation class ActivityScope

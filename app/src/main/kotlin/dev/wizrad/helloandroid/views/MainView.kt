@@ -9,6 +9,7 @@ public interface MainView {
     fun action(): Observable<Any>
 
     fun didEnableSubmit(isEnabled: Boolean)
+    fun didUpdateSelectedRegion(region: String)
     fun didUpdateRegions(regions: List<String>)
     fun didUpdateSummoner(summoner: Summoner)
 }
