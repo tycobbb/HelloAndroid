@@ -6,7 +6,7 @@ import com.squareup.okhttp.Request
 import com.squareup.okhttp.Response
 import com.squareup.okhttp.ResponseBody
 
-public class LoggingInterceptor(
+class LoggingInterceptor(
     val baseUrl: String) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain) : Response {

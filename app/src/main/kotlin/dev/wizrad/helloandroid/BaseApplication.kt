@@ -6,7 +6,7 @@ import dev.wizrad.helloandroid.dagger.modules.RiotServicesModule
 
 import android.app.Application
 
-public abstract class BaseApplication : Application() {
+abstract class BaseApplication : Application() {
 
     protected fun initComponent() : RootComponent {
         return DaggerRootComponent.builder()

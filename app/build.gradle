@@ -40,8 +40,7 @@ android {
     }
 
     buildTypes {
-
-        loadConfig(debug.&buildConfigField,   "../debug.properties")
+        loadConfig(debug.&buildConfigField, "../debug.properties")
         loadConfig(release.&buildConfigField, "../release.properties")
 
         release {
@@ -52,6 +51,7 @@ android {
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
         androidTest.java.srcDirs += 'src/androidTest/kotlin'
     }
 }
@@ -68,7 +68,7 @@ dependencies {
     compile 'com.jakewharton.rxbinding:rxbinding:0.2.0'
 
     // dagger2
-    kapt    "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
     compile "com.google.dagger:dagger:$dagger_version"
     provided 'org.glassfish:javax.annotation:10.0-b28'
 
@@ -87,7 +87,7 @@ dependencies {
 
     // spek
     testCompile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    testCompile "org.jetbrains.spek:spek:0.1-SNAPSHOT"
+    testCompile "org.jetbrains.spek:spek:0.1.180"
 }
 
 repositories {

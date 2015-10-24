@@ -1,59 +1,57 @@
 package dev.wizrad.helloandroid.views
 
-import dev.wizrad.helloandroid.MainApplication
-import dev.wizrad.helloandroid.presenters.PresenterType
-import dev.wizrad.helloandroid.dagger.components.DaggerActivityComponent
-
 import android.app.Activity
 import android.os.Bundle
-
+import dev.wizrad.helloandroid.MainApplication
+import dev.wizrad.helloandroid.dagger.components.DaggerActivityComponent
+import dev.wizrad.helloandroid.presenters.PresenterType
 import javax.inject.Inject
 
-public abstract class BaseActivity<P: PresenterType> : Activity() {
+abstract class BaseActivity<P : PresenterType> : Activity() {
 
-    //
-    // Dependencies
-    //
+  //
+  // Dependencies
+  //
 
-    protected lateinit var presenter: P @Inject set
+  protected lateinit var presenter: P @Inject set
 
-    //
-    // Lifecycle
-    //
+  //
+  // Lifecycle
+  //
 
-    protected override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+  protected override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
 
-        // inject dependencies before base onCreate finishes and before the
-        // presenter is referenced
-        this.onInject()
+    // inject dependencies before base onCreate finishes and before the
+    // presenter is referenced
+    this.onInject()
 
-        presenter.initialize()
-    }
+    presenter.initialize()
+  }
 
-    protected override fun onStart() {
-        super.onStart()
+  protected override fun onStart() {
+    super.onStart()
 
-        // and allow the present to set-up
-        presenter.becomeActive()
-    }
+    // and allow the present to set-up
+    presenter.becomeActive()
+  }
 
-    protected override fun onStop() {
-        super.onStop()
+  protected override fun onStop() {
+    super.onStop()
 
-        // allow the presenter to clean up
-        presenter.resignActive()
-    }
+    // allow the presenter to clean up
+    presenter.resignActive()
+  }
 
-    //
-    // region Injection
-    //
+  //
+  // region Injection
+  //
 
-    abstract fun onInject()
+  abstract fun onInject()
 
-    protected val component: DaggerActivityComponent.Builder get() {
-        return DaggerActivityComponent.builder()
-            .rootComponent((application as MainApplication).component);
-    }
+  protected val component: DaggerActivityComponent.Builder get() {
+    return DaggerActivityComponent.builder()
+      .rootComponent((application as MainApplication).component);
+  }
 
 }

@@ -1,6 +1,6 @@
 package dev.wizrad.helloandroid.services.utilities
 
-public class UrlComponents<T>(vararg val components: T) {
+class UrlComponents<T>(vararg val components: T) {
 
     public var separator = ","
 

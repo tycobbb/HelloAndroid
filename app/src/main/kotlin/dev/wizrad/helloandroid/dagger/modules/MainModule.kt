@@ -1,24 +1,22 @@
 package dev.wizrad.helloandroid.dagger.modules
 
-import dev.wizrad.helloandroid.views.MainView
-import dev.wizrad.helloandroid.presenters.MainPresenter
-import dev.wizrad.helloandroid.presenters.MainPresenterType
-
 import dagger.Module
 import dagger.Provides
+import dev.wizrad.helloandroid.presenters.MainPresenter
+import dev.wizrad.helloandroid.presenters.MainPresenterType
+import dev.wizrad.helloandroid.views.MainView
 
 @Module
-public class MainModule(
-    val view: MainView) {
+class MainModule(
+  val view: MainView) {
 
-    @Provides
-    fun mainView() : MainView {
-        return view
-    }
+  @Provides
+  fun mainView(): MainView {
+    return view
+  }
 
-    @Provides
-    fun mainPresenter(presenter: MainPresenter) : MainPresenterType {
-        return presenter
-    }
-
+  @Provides
+  fun mainPresenter(presenter: MainPresenter): MainPresenterType {
+    return presenter
+  }
 }

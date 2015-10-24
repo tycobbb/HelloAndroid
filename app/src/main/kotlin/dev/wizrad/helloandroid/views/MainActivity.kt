@@ -17,7 +17,7 @@ import com.jakewharton.rxbinding.widget.RxTextView
 import dev.wizrad.helloandroid.views.shared.OptionsField
 import rx.Observable
 
-public class MainActivity : BaseActivity<MainPresenterType>(), MainView {
+class MainActivity : BaseActivity<MainPresenterType>(), MainView {
 
     //
     // Outlets

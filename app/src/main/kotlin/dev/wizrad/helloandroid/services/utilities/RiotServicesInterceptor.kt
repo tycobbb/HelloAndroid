@@ -3,7 +3,7 @@ package dev.wizrad.helloandroid.services.utilities
 import com.squareup.okhttp.Interceptor
 import com.squareup.okhttp.Response
 
-public class RiotServicesInterceptor(
+class RiotServicesInterceptor(
     val apiKey: String) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain) : Response {

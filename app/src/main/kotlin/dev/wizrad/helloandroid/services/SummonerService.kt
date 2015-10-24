@@ -7,17 +7,17 @@ import retrofit.http.GET
 import retrofit.http.Path
 import rx.Observable
 
-public interface SummonerService {
+interface SummonerService {
 
-    @GET("/api/lol/{region}/v1.4/summoner/by-name/{summonerNames}")
-    public fun fetchSummonersByName(
-        @Path("region") region: String,
-        @Path("summonerNames") names: UrlComponents<String>) : Observable<MutableMap<String, Summoner>>
+  @GET("/api/lol/{region}/v1.4/summoner/by-name/{summonerNames}")
+  public fun fetchSummonersByName(
+    @Path("region") region: String,
+    @Path("summonerNames") names: UrlComponents<String>): Observable<MutableMap<String, Summoner>>
 
-    @GET("/api/lol/{region}/v1.4/summoner/{summonerIds}")
-    public fun fetchSummonersById(
-        @Path("region") region: String,
-        @Path("summonerIds") ids: UrlComponents<String>) : Observable<MutableMap<String, Summoner>>
+  @GET("/api/lol/{region}/v1.4/summoner/{summonerIds}")
+  public fun fetchSummonersById(
+    @Path("region") region: String,
+    @Path("summonerIds") ids: UrlComponents<String>): Observable<MutableMap<String, Summoner>>
 
 }
 

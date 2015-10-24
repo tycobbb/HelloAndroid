@@ -1,23 +1,22 @@
 package dev.wizrad.helloandroid.dagger.modules
 
-import dev.wizrad.helloandroid.services.LeagueService
-import dev.wizrad.helloandroid.services.SummonerService
-import dev.wizrad.helloandroid.services.RiotServices
-
 import dagger.Module
 import dagger.Provides
+import dev.wizrad.helloandroid.services.LeagueService
+import dev.wizrad.helloandroid.services.RiotServices
+import dev.wizrad.helloandroid.services.SummonerService
 
 @Module
-public class RiotServicesModule() : RiotServicesProvider {
+class RiotServicesModule() {
 
-    @Provides
-    override fun leagueService() : LeagueService {
-        return RiotServices.create(LeagueService::class.java)
-    }
+  @Provides
+  fun leagueService(): LeagueService {
+    return RiotServices.create(LeagueService::class.java)
+  }
 
-    @Provides
-    override fun summonerService() : SummonerService {
-        return RiotServices.create(SummonerService::class.java)
-    }
+  @Provides
+  fun summonerService(): SummonerService {
+    return RiotServices.create(SummonerService::class.java)
+  }
 
 }
