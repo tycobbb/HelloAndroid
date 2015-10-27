@@ -26,7 +26,7 @@ class MainPresenter @Inject constructor(
   override fun didBecomeActive() {
     super.didBecomeActive()
 
-    // automatically update the regions
+    // automatically update the region
     view.didUpdateRegions(regions.map { it.code })
 
     // bind to the view's input sources

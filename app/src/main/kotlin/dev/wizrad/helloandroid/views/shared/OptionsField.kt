@@ -15,7 +15,7 @@ import dev.wizrad.helloandroid.extensions.get
 import rx.Observable
 import rx.subjects.BehaviorSubject
 
-internal class OptionsField : FrameLayout {
+class OptionsField : FrameLayout {
 
     //
     // Children
