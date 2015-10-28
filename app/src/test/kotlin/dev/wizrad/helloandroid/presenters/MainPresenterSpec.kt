@@ -6,8 +6,7 @@ import dev.wizrad.helloandroid.dagger.modules.MockMainModule
 import dev.wizrad.helloandroid.models.Region
 import dev.wizrad.helloandroid.views.MainView
 import org.mockito.Mockito.*
-import kotlin.test.assertEquals
-import kotlin.test.expect
+import rx.subjects.PublishSubject
 
 class MainPresenterSpec : Spec() { init {
 
@@ -26,6 +25,10 @@ class MainPresenterSpec : Spec() { init {
         .mainPresenter()
     }
 
+    afterOn {
+      subject.resignActive()
+    }
+
     on("becoming active") {
       `when`(view().summonerName()).thenReturn(later("fartbutt"))
       `when`(view().selectedRegion()).thenReturn(later(1))
@@ -41,8 +44,23 @@ class MainPresenterSpec : Spec() { init {
         verify(view()).didUpdateSelectedRegion(Region.NA.code)
       }
 
-      it("should the default the submit button to disabled") {
+      it("should default submission to disabled") {
         verify(view()).didEnableSubmit(false)
+      }
+    }
+
+    on("entering a name") {
+      val name = PublishSubject.create<CharSequence>()
+
+      `when`(view().summonerName()).thenReturn(name.asObservable())
+      `when`(view().selectedRegion()).thenReturn(later(1))
+      `when`(view().action()).thenReturn(later(1))
+
+      subject.becomeActive()
+
+      it("should enable submission") {
+        name.onNext("fartbutt")
+        verify(view()).didEnableSubmit(true)
       }
     }
   }

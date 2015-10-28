@@ -1,8 +1,6 @@
 package dev.wizrad.helloandroid.presenters
 
 import dev.wizrad.helloandroid.utilities.Subscriptions
-import rx.Subscription
-import java.util.*
 
 abstract class Presenter : PresenterType {
 
@@ -10,15 +8,8 @@ abstract class Presenter : PresenterType {
   // region Properties
   //
 
-  private var _subscriptions: MutableList<Subscription>? = null
-
-  override val isActive: Boolean get() {
-    return this._subscriptions != null
-  }
-
-  override val subscriptions: Subscriptions get() {
-    return Subscriptions(this._subscriptions!!)
-  }
+  override val subscriptions = Subscriptions()
+  override val isActive: Boolean get() = !subscriptions.isUnsubscribed
 
   // endregion
 
@@ -31,8 +22,7 @@ abstract class Presenter : PresenterType {
   }
 
   override fun becomeActive() {
-    this._subscriptions = ArrayList<Subscription>()
-
+    subscriptions.prepareToSubscribe()
     this.didBecomeActive()
   }
 
@@ -41,13 +31,7 @@ abstract class Presenter : PresenterType {
   }
 
   override fun resignActive() {
-    val subscriptions = this._subscriptions!!
-    this._subscriptions = null
-
-    for (subscription in subscriptions) {
-      subscription.unsubscribe()
-    }
-
+    subscriptions.unsubscribe()
     this.didResignActive()
   }
 

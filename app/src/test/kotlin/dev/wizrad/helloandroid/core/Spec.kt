@@ -33,6 +33,7 @@ open abstract class Spec : Spek() {
     schedulersHook.register()
   }
 
+  // override given to register/deregister
   override fun given(description: String, expression: Given.() -> Unit) {
     super.given(description, {
       // create a scheduler hook that forces the immediate resolution
