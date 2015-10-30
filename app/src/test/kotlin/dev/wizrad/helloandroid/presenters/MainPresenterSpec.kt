@@ -18,23 +18,25 @@ class MainPresenterSpec : Spec() { init {
       return module.view.value
     }
 
-    beforeOn {
+    beforeEach {
       module  = MockMainModule(false)
       subject = viewComponent()
         .mockMainModule(module).build()
         .mainPresenter()
     }
 
-    afterOn {
+    afterEach {
       subject.resignActive()
     }
 
     on("becoming active") {
-      `when`(view().summonerName()).thenReturn(later("fartbutt"))
-      `when`(view().selectedRegion()).thenReturn(later(1))
-      `when`(view().action()).thenReturn(later(1))
+      beforeEach {
+        `when`(view().summonerName()).thenReturn(later("fartbutt"))
+        `when`(view().selectedRegion()).thenReturn(later(1))
+        `when`(view().action()).thenReturn(later(1))
 
-      subject.becomeActive()
+        subject.becomeActive()
+      }
 
       it("should update the view with the list of regions") {
         verify(view()).didUpdateRegions(Region.all().map { it.code })
@@ -50,13 +52,17 @@ class MainPresenterSpec : Spec() { init {
     }
 
     on("entering a name") {
-      val name = PublishSubject.create<CharSequence>()
+      var name: PublishSubject<CharSequence>
 
-      `when`(view().summonerName()).thenReturn(name.asObservable())
-      `when`(view().selectedRegion()).thenReturn(later(1))
-      `when`(view().action()).thenReturn(later(1))
+      beforeEach {
+        name = PublishSubject.create<CharSequence>()
 
-      subject.becomeActive()
+        `when`(view().summonerName()).thenReturn(name.asObservable())
+        `when`(view().selectedRegion()).thenReturn(later(1))
+        `when`(view().action()).thenReturn(later(1))
+
+        subject.becomeActive()
+      }
 
       it("should enable submission") {
         name.onNext("fartbutt")
@@ -64,5 +70,4 @@ class MainPresenterSpec : Spec() { init {
       }
     }
   }
-
 }}

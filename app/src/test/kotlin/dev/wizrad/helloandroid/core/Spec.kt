@@ -3,8 +3,8 @@ package dev.wizrad.helloandroid.core
 import dev.wizrad.helloandroid.dagger.components.DaggerMockRootComponent
 import dev.wizrad.helloandroid.dagger.components.DaggerMockViewComponent
 import dev.wizrad.helloandroid.dagger.modules.MockRiotServicesModule
-import org.jetbrains.spek.api.Given
-import org.jetbrains.spek.api.Spek
+import dev.wizrad.respek.dsl.Nestable
+import dev.wizrad.respek.dsl.Respek
 import rx.Scheduler
 import rx.android.plugins.RxAndroidPlugins
 import rx.android.plugins.RxAndroidSchedulersHook
@@ -12,7 +12,7 @@ import rx.plugins.RxJavaPlugins
 import rx.plugins.RxJavaSchedulersHook
 import rx.schedulers.Schedulers
 
-open abstract class Spec : Spek() {
+abstract class Spec : Respek() {
 
   private object schedulersHook: RxJavaSchedulersHook() {
     var hasRegistered = false
@@ -33,26 +33,24 @@ open abstract class Spec : Spek() {
     schedulersHook.register()
   }
 
-  // override given to register/deregister
-  override fun given(description: String, expression: Given.() -> Unit) {
-    super.given(description, {
+  override fun given(message: String, expression: Nestable.() -> Unit) {
+    super.given(message, {
       // create a scheduler hook that forces the immediate resolution
-      val schedulerHook = object: RxAndroidSchedulersHook() {
+      val schedulersHook = object: RxAndroidSchedulersHook() {
           override fun getMainThreadScheduler(): Scheduler? {
             return Schedulers.immediate()
           }
       }
 
       // automatically register/reset the scheduler hook in before/after on
-      beforeOn {
-        RxAndroidPlugins.getInstance().registerSchedulersHook(schedulerHook)
+      beforeEach {
+        RxAndroidPlugins.getInstance().registerSchedulersHook(schedulersHook)
       }
 
-      afterOn {
+      afterEach {
         RxAndroidPlugins.getInstance().reset()
       }
 
-      // then call the original expression on this
       expression()
     })
   }
