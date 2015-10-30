@@ -10,6 +10,14 @@ public abstract class Respek() : Root {
 
   private var root:  Context? = null
 
+  fun run() {
+    if(root == null) {
+      return // TODO: throw error if there's no root
+    } else {
+      root!!.run()
+    }
+  }
+
   //
   // Definable
   //
@@ -23,14 +31,6 @@ public abstract class Respek() : Root {
     }
   }
 
-  fun run() {
-    if(root == null) {
-      return // TODO: throw error if there's no root
-    } else {
-      root!!.run()
-    }
-  }
-
   //
   // Debugging
   //
@@ -39,7 +39,7 @@ public abstract class Respek() : Root {
     var result = this.javaClass.name
 
     if(root != null) {
-      result = "$result\n${root!!.toString()}"
+      result = "$result\n${root!!.debugString(0)}"
     }
 
     return result

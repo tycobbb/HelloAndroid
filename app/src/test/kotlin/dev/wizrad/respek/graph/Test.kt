@@ -13,7 +13,15 @@ internal class Test(
     node.action(this)
   }
 
+  override fun toString(): String {
+    return node.message()
+  }
+
+  //
+  // DebugPrintable
+  //
+
   override fun debugString(depth: Int): String {
-    return node.message().padStart(depth * 2)
+    return this.paddedString(depth)
   }
 }

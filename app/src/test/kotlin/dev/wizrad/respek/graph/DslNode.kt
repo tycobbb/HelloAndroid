@@ -1,8 +1,5 @@
 package dev.wizrad.respek.graph
 
-import dev.wizrad.respek.graph.Test
-import dev.wizrad.respek.graph.Context
-
 internal interface DslNode<T> {
   fun message(): String
   fun action(executor: T)

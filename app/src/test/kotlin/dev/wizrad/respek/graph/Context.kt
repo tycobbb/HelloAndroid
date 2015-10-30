@@ -109,24 +109,25 @@ internal class Context(
     return test
   }
 
-  //
-  // Debugging
-  //
-
   override fun toString(): String {
-    return debugString(0)
+    return node.message()
   }
 
+  //
+  // DebugPrintable
+  //
+
   override fun debugString(depth: Int): String {
-    var result = node.message().padStart(depth * 2)
-    for(context in children) {
-      result += context.debugString(depth + 1)
-    }
+    var result = "${this.paddedString(depth)}\n"
+
     for(test in tests) {
-      result += test.debugString(depth + 1)
+      result += "${test.debugString(depth + 1)}\n"
+    }
+
+    for(context in children) {
+      result += "${context.debugString(depth + 1)}"
     }
 
     return result
   }
-
 }
