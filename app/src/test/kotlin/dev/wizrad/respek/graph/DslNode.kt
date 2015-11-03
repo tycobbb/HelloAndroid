@@ -1,6 +1,6 @@
 package dev.wizrad.respek.graph
 
-internal interface DslNode<T> {
+interface DslNode<T> {
   fun message(): String
   fun action(executor: T)
 

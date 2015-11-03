@@ -4,12 +4,14 @@ import dev.wizrad.respek.dsl.Nestable
 import dev.wizrad.respek.dsl.Testable
 import dev.wizrad.respek.exceptions.ContextFailureException
 import dev.wizrad.respek.exceptions.HookFailureException
-import dev.wizrad.respek.exceptions.TestFailureException
+import dev.wizrad.respek.graph.interfaces.DebugPrintable
+import dev.wizrad.respek.graph.interfaces.Parent
+import dev.wizrad.respek.graph.interfaces.Traversable
 import java.util.ArrayList
 
-internal class Context(
+class Context(
   private val node: DslNode<Context>,
-  private val parent: Runnable? = null) : Nestable, Runnable, DebugPrintable {
+  private val parent: Parent? = null) : Nestable, Parent, Traversable, DebugPrintable {
 
   private val hooks = Hooks()
   private val children: MutableList<Context> = ArrayList()
@@ -24,26 +26,8 @@ internal class Context(
   }
 
   //
-  // Runnable
+  // Parent
   //
-
-  override fun run() {
-    this.runOwnHooks(Hooks.Type.Before)
-
-    // run all our tests, calling the appropriate hooks
-    for(test in tests) {
-      this.runHooks(Hooks.Type.BeforeEach)
-      this.runTest(test)
-      this.runHooks(Hooks.Type.AfterEach)
-    }
-
-    // run all our child contexts
-    for(context in children) {
-      context.run()
-    }
-
-    this.runOwnHooks(Hooks.Type.After)
-  }
 
   override fun runHooks(type: Hooks.Type) {
     parent?.runHooks(type)
@@ -55,14 +39,6 @@ internal class Context(
       hooks.run(type)
     } catch(exception: Exception) {
       throw HookFailureException(type, this, exception)
-    }
-  }
-
-  private fun runTest(test: Test) {
-    try {
-      test.run()
-    } catch(exception: Exception) {
-      throw TestFailureException(test, this, exception)
     }
   }
 
@@ -104,13 +80,43 @@ internal class Context(
   }
 
   private fun appendTest(node: DslNode<Test>) : Test {
-    val test = Test(node)
+    val test = Test(node, this)
     tests.add(test)
     return test
   }
 
   override fun toString(): String {
     return node.message()
+  }
+
+  //
+  // Traversable
+  //
+
+  override fun <T> reduce(initial: T, enumerator: (T, Test) -> Unit): T {
+    return traverse(initial, { memo, context -> memo }, enumerator)
+  }
+
+  override fun <T> traverse(initial: T, nester: (T, Context) -> T, enumerator: (T, Test) -> Unit): T {
+    val nested = nester(initial, this)
+
+    for(test in tests) {
+      enumerator(nested, test)
+    }
+
+    for(context in children) {
+      context.traverse(nested, nester, enumerator)
+    }
+
+    return initial
+  }
+
+  //
+  // Describable
+  //
+
+  override val description: String get() {
+    return "${(parent?.description ?: "")} ${this.toString()}"
   }
 
   //

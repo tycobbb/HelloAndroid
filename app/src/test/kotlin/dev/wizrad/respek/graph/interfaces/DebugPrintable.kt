@@ -1,6 +1,6 @@
-package dev.wizrad.respek.graph
+package dev.wizrad.respek.graph.interfaces
 
-internal interface DebugPrintable {
+interface DebugPrintable {
   fun debugString(depth: Int) : String
 
   fun paddedString(depth: Int) : String {

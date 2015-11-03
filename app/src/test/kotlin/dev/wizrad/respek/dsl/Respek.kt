@@ -2,20 +2,21 @@ package dev.wizrad.respek.dsl
 
 import dev.wizrad.respek.graph.Context
 import dev.wizrad.respek.graph.DslNode
+import dev.wizrad.respek.graph.Test
+import dev.wizrad.respek.graph.interfaces.Traversable
 import dev.wizrad.respek.runners.SpecRunner
 import org.junit.runner.RunWith
 
 @RunWith(SpecRunner::class)
-public abstract class Respek() : Root {
+abstract class Respek() : Root, Traversable {
 
-  private var root:  Context? = null
-
-  fun run() {
-    if(root == null) {
-      return // TODO: throw error if there's no root
-    } else {
-      root!!.run()
+  private var context: Context? = null
+  private val root: Context get() {
+     if(context == null) {
+      return context!! // TODO: obviously crashes, throw error if there's no root
     }
+
+    return context!!
   }
 
   //
@@ -23,12 +24,24 @@ public abstract class Respek() : Root {
   //
 
   override fun given(message: String, expression: Nestable.() -> Unit) {
-    if(root != null) {
+    if(context != null) {
       return // TODO: throw error if spec contains more than one root context
     } else {
       // construct the tree of nested contexts / tests starting this given context
-      root = Context(DslNode.given(message, expression))
+      context = Context(DslNode.given(message, expression))
     }
+  }
+
+  //
+  // Traversable
+  //
+
+  override fun <T> reduce(initial: T, enumerator: (T, Test) -> Unit): T {
+    return root.reduce(initial, enumerator)
+  }
+
+  override fun <T> traverse(initial: T, nester: (T, Context) -> T, enumerator: (T, Test) -> Unit): T {
+    return root.traverse(initial, nester, enumerator)
   }
 
   //
