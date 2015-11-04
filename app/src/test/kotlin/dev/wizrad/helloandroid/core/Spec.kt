@@ -4,7 +4,7 @@ import dev.wizrad.helloandroid.dagger.components.DaggerMockRootComponent
 import dev.wizrad.helloandroid.dagger.components.DaggerMockViewComponent
 import dev.wizrad.helloandroid.dagger.modules.MockRiotServicesModule
 import dev.wizrad.respek.dsl.Nestable
-import dev.wizrad.respek.dsl.Respek
+import dev.wizrad.respek.graph.Respek
 import rx.Scheduler
 import rx.android.plugins.RxAndroidPlugins
 import rx.android.plugins.RxAndroidSchedulersHook

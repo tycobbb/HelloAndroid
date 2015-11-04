@@ -1,6 +1,6 @@
 package dev.wizrad.respek.runners
 
-import dev.wizrad.respek.dsl.Respek
+import dev.wizrad.respek.graph.Respek
 import dev.wizrad.respek.graph.Context
 import dev.wizrad.respek.graph.Test
 import dev.wizrad.respek.graph.throwables.HookFailure

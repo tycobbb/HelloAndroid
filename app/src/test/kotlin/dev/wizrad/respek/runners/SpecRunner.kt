@@ -1,6 +1,6 @@
 package dev.wizrad.respek.runners
 
-import dev.wizrad.respek.dsl.Respek
+import dev.wizrad.respek.graph.Respek
 import org.junit.runner.Description
 import org.junit.runner.notification.RunNotifier
 import org.junit.runners.ParentRunner

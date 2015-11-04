@@ -1,7 +1,8 @@
 package dev.wizrad.respek.runners
 
-import dev.wizrad.respek.dsl.Respek
+import dev.wizrad.respek.graph.Respek
 import dev.wizrad.respek.graph.Test
+import dev.wizrad.respek.graph.throwables.StatusFailure
 import org.junit.runner.Description
 import org.junit.runner.notification.RunNotifier
 

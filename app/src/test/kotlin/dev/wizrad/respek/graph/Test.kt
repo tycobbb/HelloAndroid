@@ -12,7 +12,7 @@ class Test(
   private val parent: Parent) : Testable, Describable, DebugPrintable {
 
   fun run() {
-    if(node.status != Status.NORMAL) {
+    if(node.status != Status.Normal) {
       throw StatusFailure(this, node.status)
     }
 
@@ -20,8 +20,8 @@ class Test(
 
     try {
       node.action(this)
-    } catch(exception: Exception) {
-      throw TestFailure(this, exception)
+    } catch(failure: Throwable) {
+      throw TestFailure(this, failure)
     }
 
     parent.runHooks(Hooks.Type.AfterEach)

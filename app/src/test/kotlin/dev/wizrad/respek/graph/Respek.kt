@@ -1,9 +1,9 @@
-package dev.wizrad.respek.dsl
+package dev.wizrad.respek.graph
 
-import dev.wizrad.respek.graph.Context
-import dev.wizrad.respek.graph.DslNode
-import dev.wizrad.respek.graph.Test
+import dev.wizrad.respek.dsl.Nestable
+import dev.wizrad.respek.dsl.Root
 import dev.wizrad.respek.graph.interfaces.Mappable
+import dev.wizrad.respek.graph.throwables.SpecException
 import dev.wizrad.respek.runners.SpecRunner
 import org.junit.runner.RunWith
 
@@ -12,8 +12,8 @@ abstract class Respek() : Root, Mappable {
 
   private var context: Context? = null
   private val root: Context get() {
-     if(context == null) {
-      return context!! // TODO: obviously crashes, throw error if there's no root
+    if(context == null) {
+      throw SpecException("Spec ${javaClass.name} did not contain a `given` block")
     }
 
     return context!!
@@ -25,7 +25,7 @@ abstract class Respek() : Root, Mappable {
 
   override fun given(message: String, expression: Nestable.() -> Unit) {
     if(context != null) {
-      return // TODO: throw error if spec contains more than one root context
+      throw SpecException("Spec ${javaClass.name} can only contain one `given` block at the root level")
     } else {
       // construct the tree of nested contexts / tests starting this given context
       context = Context(DslNode.given(message, expression))

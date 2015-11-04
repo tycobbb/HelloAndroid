@@ -1,6 +1,6 @@
 package dev.wizrad.respek.runners
 
-import dev.wizrad.respek.dsl.Respek
+import dev.wizrad.respek.graph.Respek
 import dev.wizrad.respek.graph.Context
 import dev.wizrad.respek.graph.Hooks
 import org.junit.runner.Description
@@ -22,11 +22,13 @@ class ChildContext<T: Respek>(
   //
 
   override fun action(notifier: RunNotifier) {
-    context.runOwnHooks(Hooks.Type.Before)
+    context.willRun()
+
     for(child in children.value) {
       child.run(notifier)
     }
-    context.runOwnHooks(Hooks.Type.After)
+
+    context.didRun()
   }
 
   override val description: Description by lazy {
@@ -43,6 +45,7 @@ class ChildContext<T: Respek>(
     for(child in children) {
       this.addChild(child)
     }
+
     return this
   }
 }

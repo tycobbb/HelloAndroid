@@ -23,11 +23,11 @@ interface DslNode<T> {
       return object: DslNode<Context> {
         override fun message() = prefix + " " + message
         override fun action(context: Context) = context.expression()
-        override val status: Status get() = Status.NORMAL
+        override val status: Status get() = Status.Normal
       }
     }
 
-    fun test(message: String, expression: Test.() -> Unit, status: Status = Status.NORMAL) : DslNode<Test> {
+    fun test(message: String, expression: Test.() -> Unit, status: Status = Status.Normal) : DslNode<Test> {
       return object: DslNode<Test> {
         override fun message() = "it " + message
         override fun action(test: Test) = test.expression()

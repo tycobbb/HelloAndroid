@@ -26,6 +26,14 @@ class Context(
     }
   }
 
+  fun willRun() {
+    this.runOwnHooks(Hooks.Type.Before)
+  }
+
+  fun didRun() {
+    this.runOwnHooks(Hooks.Type.After)
+  }
+
   //
   // Parent
   //
@@ -68,7 +76,7 @@ class Context(
   }
 
   override fun xit(message: String, expression: Testable.() -> Unit) {
-    this.appendTest(DslNode.test(message, expression, Status.SKIPPED))
+    this.appendTest(DslNode.test(message, expression, Status.Skipped))
   }
 
   private fun appendTest(node: DslNode<Test>) : Test {

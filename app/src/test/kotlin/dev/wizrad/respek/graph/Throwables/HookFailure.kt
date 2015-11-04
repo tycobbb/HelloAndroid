@@ -4,8 +4,8 @@ import dev.wizrad.respek.graph.Context
 import dev.wizrad.respek.graph.Hooks
 
 internal class HookFailure(
-  val hook: Hooks.Type,
-  context: Context,
-  exception: Exception) : ContextFailure(context, exception) {
+  val hook:  Hooks.Type,
+  context:   Context,
+  throwable: Throwable) : ContextFailure(context, throwable) {
 
 }
