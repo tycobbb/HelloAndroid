@@ -64,7 +64,7 @@ class MainPresenterSpec : Spec() { init {
         subject.becomeActive()
       }
 
-      it("should enable submission") {
+      xit("should enable submission") {
         name.onNext("fartbutt")
         verify(view()).didEnableSubmit(true)
       }

@@ -9,7 +9,11 @@ class Hooks : Hookable {
     Before(0),
     BeforeEach(1),
     After(2),
-    AfterEach(3)
+    AfterEach(3);
+
+    val isBefore: Boolean get() {
+      return this == Before || this == BeforeEach
+    }
   }
 
   private val hooks: Array<Hook> = Array(4, { Hook() })

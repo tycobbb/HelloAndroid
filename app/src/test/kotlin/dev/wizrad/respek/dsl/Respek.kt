@@ -3,12 +3,12 @@ package dev.wizrad.respek.dsl
 import dev.wizrad.respek.graph.Context
 import dev.wizrad.respek.graph.DslNode
 import dev.wizrad.respek.graph.Test
-import dev.wizrad.respek.graph.interfaces.Traversable
+import dev.wizrad.respek.graph.interfaces.Mappable
 import dev.wizrad.respek.runners.SpecRunner
 import org.junit.runner.RunWith
 
 @RunWith(SpecRunner::class)
-abstract class Respek() : Root, Traversable {
+abstract class Respek() : Root, Mappable {
 
   private var context: Context? = null
   private val root: Context get() {
@@ -33,15 +33,11 @@ abstract class Respek() : Root, Traversable {
   }
 
   //
-  // Traversable
+  // Mappable
   //
 
-  override fun <T> reduce(initial: T, enumerator: (T, Test) -> Unit): T {
-    return root.reduce(initial, enumerator)
-  }
-
-  override fun <T> traverse(initial: T, nester: (T, Context) -> T, enumerator: (T, Test) -> Unit): T {
-    return root.traverse(initial, nester, enumerator)
+  override fun <T> map(contextTransform: ((Context) -> T)?, testTransform: ((Test) -> T)?): MutableList<T> {
+    return arrayListOf(contextTransform!!(root))
   }
 
   //
@@ -51,8 +47,8 @@ abstract class Respek() : Root, Traversable {
   override fun toString(): String {
     var result = this.javaClass.name
 
-    if(root != null) {
-      result = "$result\n${root!!.debugString(0)}"
+    if(context != null) {
+      result = "$result\n${root.debugString(0)}"
     }
 
     return result

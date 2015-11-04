@@ -2,16 +2,17 @@ package dev.wizrad.respek.graph
 
 import dev.wizrad.respek.dsl.Nestable
 import dev.wizrad.respek.dsl.Testable
-import dev.wizrad.respek.exceptions.ContextFailureException
-import dev.wizrad.respek.exceptions.HookFailureException
+import dev.wizrad.respek.graph.throwables.ContextFailure
+import dev.wizrad.respek.graph.throwables.HookFailure
 import dev.wizrad.respek.graph.interfaces.DebugPrintable
 import dev.wizrad.respek.graph.interfaces.Parent
-import dev.wizrad.respek.graph.interfaces.Traversable
+import dev.wizrad.respek.graph.interfaces.Mappable
+import dev.wizrad.respek.utilities.unwrap
 import java.util.ArrayList
 
 class Context(
   private val node: DslNode<Context>,
-  private val parent: Parent? = null) : Nestable, Parent, Traversable, DebugPrintable {
+  private val parent: Parent? = null) : Nestable, Parent, Mappable, DebugPrintable {
 
   private val hooks = Hooks()
   private val children: MutableList<Context> = ArrayList()
@@ -21,7 +22,7 @@ class Context(
     try {
       node.action(this)
     } catch(exception: Exception) {
-      throw ContextFailureException(this, exception)
+      throw ContextFailure(this, exception)
     }
   }
 
@@ -34,11 +35,11 @@ class Context(
     this.runOwnHooks(type)
   }
 
-  private fun runOwnHooks(type: Hooks.Type) {
+  fun runOwnHooks(type: Hooks.Type) {
     try {
       hooks.run(type)
     } catch(exception: Exception) {
-      throw HookFailureException(type, this, exception)
+      throw HookFailure(type, this, exception)
     }
   }
 
@@ -59,6 +60,24 @@ class Context(
   }
 
   //
+  // Tests
+  //
+
+  override fun it(message: String, expression: Testable.() -> Unit) {
+    this.appendTest(DslNode.test(message, expression))
+  }
+
+  override fun xit(message: String, expression: Testable.() -> Unit) {
+    this.appendTest(DslNode.test(message, expression, Status.SKIPPED))
+  }
+
+  private fun appendTest(node: DslNode<Test>) : Test {
+    val test = Test(node, this)
+    tests.add(test)
+    return test
+  }
+
+  //
   // Hookable
   //
 
@@ -68,47 +87,25 @@ class Context(
   override fun afterEach(expression: () -> Unit) = hooks.afterEach(expression)
 
   //
-  // Tests
+  // Mappable
   //
 
-  override fun it(message: String, expression: Testable.() -> Unit) {
-    this.appendTest(DslNode.test(message, expression))
-  }
+  override fun <T> map(contextTransform: ((Context) -> T)?, testTransform: ((Test) -> T)?): MutableList<T> {
+    val result = arrayListOf<T>()
 
-  override fun xit(message: String, expression: Testable.() -> Unit) {
-    this.appendTest(DslNode.test(message, expression))
-  }
-
-  private fun appendTest(node: DslNode<Test>) : Test {
-    val test = Test(node, this)
-    tests.add(test)
-    return test
-  }
-
-  override fun toString(): String {
-    return node.message()
-  }
-
-  //
-  // Traversable
-  //
-
-  override fun <T> reduce(initial: T, enumerator: (T, Test) -> Unit): T {
-    return traverse(initial, { memo, context -> memo }, enumerator)
-  }
-
-  override fun <T> traverse(initial: T, nester: (T, Context) -> T, enumerator: (T, Test) -> Unit): T {
-    val nested = nester(initial, this)
-
-    for(test in tests) {
-      enumerator(nested, test)
+    testTransform.unwrap { transform ->
+      for (test in tests) {
+        result.add(transform(test))
+      }
     }
 
-    for(context in children) {
-      context.traverse(nested, nester, enumerator)
+    contextTransform.unwrap { transform ->
+      for(context in children) {
+        result.add(transform(context))
+      }
     }
 
-    return initial
+    return result
   }
 
   //
@@ -116,7 +113,7 @@ class Context(
   //
 
   override val description: String get() {
-    return "${(parent?.description ?: "")} ${this.toString()}"
+    return node.message()
   }
 
   //
@@ -135,5 +132,9 @@ class Context(
     }
 
     return result
+  }
+
+  override fun toString(): String {
+    return node.message()
   }
 }

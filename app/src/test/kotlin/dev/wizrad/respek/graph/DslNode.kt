@@ -1,8 +1,14 @@
 package dev.wizrad.respek.graph
 
 interface DslNode<T> {
+  val status: Status
+
   fun message(): String
   fun action(executor: T)
+
+  //
+  // Factories
+  //
 
   companion object {
     fun on(message: String, expression: Context.() -> Unit) : DslNode<Context> {
@@ -17,13 +23,15 @@ interface DslNode<T> {
       return object: DslNode<Context> {
         override fun message() = prefix + " " + message
         override fun action(context: Context) = context.expression()
+        override val status: Status get() = Status.NORMAL
       }
     }
 
-    fun test(message: String, expression: Test.() -> Unit) : DslNode<Test> {
+    fun test(message: String, expression: Test.() -> Unit, status: Status = Status.NORMAL) : DslNode<Test> {
       return object: DslNode<Test> {
         override fun message() = "it " + message
         override fun action(test: Test) = test.expression()
+        override val status: Status get() = status
       }
     }
   }
